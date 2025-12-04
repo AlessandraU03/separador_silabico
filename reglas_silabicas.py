@@ -1,7 +1,10 @@
 """
 Módulo: Reglas Silábicas
 Descripción: Define las reglas y clasificaciones para la separación silábica en español
+             Con expresiones regulares compiladas para optimización
 """
+
+import re
 
 
 class ReglasSilabicas:
@@ -11,7 +14,7 @@ class ReglasSilabicas:
     """
     
     def __init__(self):
-        """Inicializa las reglas silábicas"""
+        """Inicializa las reglas silábicas con expresiones regulares compiladas"""
         # Definición del alfabeto
         self.vocales_fuertes = set('aeoáéó')
         self.vocales_debiles = set('iuíú')
@@ -24,35 +27,57 @@ class ReglasSilabicas:
             'pr', 'pl', 'br', 'bl', 'fr', 'fl',
             'tr', 'dr', 'cr', 'cl', 'gr', 'gl'
         ]
+        
+        # ==================== EXPRESIONES REGULARES COMPILADAS ====================
+        # Se compilan UNA VEZ para mejor rendimiento
+        
+        # Patrones vocálicos
+        self.patron_vocal = re.compile(r'[aeiouáéíóú]', re.IGNORECASE)
+        self.patron_vocal_fuerte = re.compile(r'[aeoáéó]', re.IGNORECASE)
+        self.patron_vocal_debil = re.compile(r'[iuíú]', re.IGNORECASE)
+        self.patron_vocal_acentuada = re.compile(r'[áéíóú]', re.IGNORECASE)
+        
+        # Patrones consonánticos
+        self.patron_digrafo = re.compile(r'(ch|ll|rr)', re.IGNORECASE)
+        self.patron_grupo_consonantico = re.compile(
+            r'(pr|pl|br|bl|fr|fl|tr|dr|cr|cl|gr|gl)',
+            re.IGNORECASE
+        )
+        
+        # Patrones para análisis de diptongos
+        self.patron_diptongo = re.compile(
+            r'([aeoáéó][iuíú]|[iuíú][aeoáéó]|[iu][iu])',
+            re.IGNORECASE
+        )
     
     def es_vocal_fuerte(self, char):
-        """Determina si un carácter es vocal fuerte (a, e, o)"""
-        return char.lower() in self.vocales_fuertes
+        """Determina si un carácter es vocal fuerte (a, e, o) usando regex"""
+        return self.patron_vocal_fuerte.match(char) is not None
     
     def es_vocal_debil(self, char):
-        """Determina si un carácter es vocal débil (i, u)"""
-        return char.lower() in self.vocales_debiles
+        """Determina si un carácter es vocal débil (i, u) usando regex"""
+        return self.patron_vocal_debil.match(char) is not None
     
     def es_vocal(self, char):
-        """Determina si un carácter es vocal"""
-        return char.lower() in self.vocales
+        """Determina si un carácter es vocal usando regex"""
+        return self.patron_vocal.match(char) is not None
     
     def tiene_acento(self, char):
-        """Determina si una vocal tiene acento ortográfico"""
-        return char.lower() in self.vocales_acentuadas
+        """Determina si una vocal tiene acento ortográfico usando regex"""
+        return self.patron_vocal_acentuada.match(char) is not None
     
     def es_digrafo(self, char1, char2):
-        """Verifica si dos caracteres forman un dígrafo (ch, ll, rr)"""
-        par = (char1 + char2).lower()
-        return par in self.digrafos
+        """Verifica si dos caracteres forman un dígrafo (ch, ll, rr) usando regex"""
+        par = char1 + char2
+        return self.patron_digrafo.fullmatch(par) is not None
     
     def es_grupo_consonantico(self, char1, char2):
         """
         Verifica si dos consonantes forman un grupo consonántico irrompible
-        (pr, tr, cl, bl, etc.)
+        (pr, tr, cl, bl, etc.) usando regex
         """
-        par = (char1 + char2).lower()
-        return par in self.grupos_consonanticos
+        par = char1 + char2
+        return self.patron_grupo_consonantico.fullmatch(par) is not None
     
     def es_diptongo(self, char1, char2):
         """
@@ -102,3 +127,84 @@ class ReglasSilabicas:
             else:
                 clasificacion.append((char, 'C'))
         return clasificacion
+    
+    def detectar_digrafos(self, palabra):
+        """
+        Detecta todos los dígrafos en una palabra usando regex
+        
+        Args:
+            palabra (str): Palabra a analizar
+            
+        Returns:
+            list: Lista de tuplas (posición, dígrafo)
+        """
+        digrafos = []
+        for match in self.patron_digrafo.finditer(palabra.lower()):
+            digrafos.append((match.start(), match.group()))
+        return digrafos
+    
+    def detectar_diptongos(self, palabra):
+        """
+        Detecta todos los diptongos en una palabra usando regex
+        
+        Args:
+            palabra (str): Palabra a analizar
+            
+        Returns:
+            list: Lista de tuplas (posición, diptongo)
+        """
+        diptongos = []
+        for match in self.patron_diptongo.finditer(palabra.lower()):
+            # Verificar que sea realmente un diptongo (no un hiato)
+            if self.es_diptongo(match.group()[0], match.group()[1]):
+                diptongos.append((match.start(), match.group()))
+        return diptongos
+    
+    def extraer_estructura(self, palabra):
+        """
+        Extrae la estructura silábica (V=vocal, C=consonante)
+        
+        Args:
+            palabra (str): Palabra a analizar
+            
+        Returns:
+            str: Estructura de la palabra (ej: CVCCVC)
+        """
+        estructura = ""
+        for char in palabra.lower():
+            if self.es_vocal(char):
+                estructura += "V"
+            else:
+                estructura += "C"
+        return estructura
+    
+    def detectar_hiatos(self, palabra):
+        """
+        Detecta todos los hiatos en una palabra usando las reglas silábicas
+        
+        Un hiato ocurre cuando:
+        - VF + VF (dos vocales fuertes consecutivas)
+        - VD acentuada + cualquier vocal
+        - Cualquier vocal + VD acentuada
+        
+        Args:
+            palabra (str): Palabra a analizar
+            
+        Returns:
+            list: Lista de tuplas (posición, hiato)
+        """
+        hiatos = []
+        palabra_lower = palabra.lower()
+        
+        # Buscar pares de vocales consecutivas
+        for i in range(len(palabra_lower) - 1):
+            char1 = palabra_lower[i]
+            char2 = palabra_lower[i + 1]
+            
+            # Verificar si ambos caracteres son vocales
+            if self.es_vocal(char1) and self.es_vocal(char2):
+                # Es un hiato si NO es un diptongo
+                if not self.es_diptongo(char1, char2):
+                    hiatos.append((i, char1 + char2))
+        
+        return hiatos

@@ -64,27 +64,48 @@ class ProcesadorArchivos:
     
     def _procesar_palabras(self, palabras):
         """
-        Procesa una lista de palabras.
+        Procesa una lista de palabras con análisis completo.
         
         Args:
             palabras (list): Lista de palabras a procesar
             
         Returns:
-            list: Lista de diccionarios con resultados
+            list: Lista de diccionarios con resultados (incluye análisis regex)
         """
         resultados = []
         for palabra in palabras:
-            separacion, reglas = self.separador.separar_silabas(palabra)
+            separacion, reglas, analisis = self.separador.separar_silabas(palabra)
+            
+            # Determinar tipo de fenómeno: DIPTONGO, DIGRAFO, HIATO
+            digrafos = analisis.get('digrafos', [])
+            diptongos = analisis.get('diptongos', [])
+            hiatos = analisis.get('hiatos', [])
+            
+            # Prioridad: DIGRAFO > DIPTONGO > HIATO
+            if digrafos:
+                tipo_fenomeno = 'DIGRAFO'
+            elif diptongos:
+                tipo_fenomeno = 'DIPTONGO'
+            elif hiatos:
+                tipo_fenomeno = 'HIATO'
+            else:
+                tipo_fenomeno = '---'
+            
             resultados.append({
                 'original': palabra,
                 'separacion': separacion,
-                'reglas': ', '.join(reglas)
+                'reglas': ', '.join(reglas),
+                'estructura': analisis.get('estructura', ''),
+                'tipo_fenomeno': tipo_fenomeno,
+                'digrafos': digrafos,
+                'diptongos': diptongos,
+                'hiatos': hiatos
             })
         return resultados
     
     def _generar_archivo_salida(self, archivo_salida, resultados):
         """
-        Genera el archivo de salida con los resultados.
+        Genera el archivo de salida con los resultados y análisis completo.
         
         Args:
             archivo_salida (str): Ruta del archivo de salida
@@ -92,39 +113,75 @@ class ProcesadorArchivos:
         """
         try:
             with open(archivo_salida, 'w', encoding='utf-8') as f:
-                f.write("=" * 100 + "\n")
-                f.write("SEPARACIÓN SILÁBICA - AUTÓMATA FINITO DETERMINISTA\n")
-                f.write("Universidad Politécnica de Chiapas - Lenguajes y Autómatas\n")
-                f.write("=" * 100 + "\n\n")
+                f.write("=" * 130 + "\n")
+                f.write("SEPARACION SILABICA - AUTOMATA FINITO DETERMINISTA CON EXPRESIONES REGULARES\n")
+                f.write("Universidad Politecnica de Chiapas - Lenguajes y Automatas\n")
+                f.write("=" * 130 + "\n\n")
                 
-                # Encabezados
-                f.write(f"{'Palabra Original':<20} {'Separación Silábica':<25} {'Reglas Aplicadas':<50}\n")
-                f.write("-" * 100 + "\n")
+                # Encabezados principales
+                f.write(f"{'Palabra Original':<15} {'Separacion':<20} {'Tipo':<15} {'Estructura':<20} {'Digrafos/Diptongos':<20}\n")
+                f.write("-" * 130 + "\n")
                 
                 # Resultados
                 for resultado in resultados:
-                    f.write(f"{resultado['original']:<20} {resultado['separacion']:<25} {resultado['reglas']:<50}\n")
+                    digrafos_str = ', '.join([d[1] for d in resultado['digrafos']]) if resultado['digrafos'] else ''
+                    diptongos_str = ', '.join([d[1] for d in resultado['diptongos']]) if resultado['diptongos'] else ''
+                    hiatos_str = ', '.join([d[1] for d in resultado['hiatos']]) if resultado['hiatos'] else ''
+                    
+                    # Combinar digrafos, diptongos e hiatos en una sola columna
+                    patrones = digrafos_str if digrafos_str else (diptongos_str if diptongos_str else hiatos_str)
+                    patrones = patrones if patrones else "---"
+                    
+                    f.write(f"{resultado['original']:<15} {resultado['separacion']:<20} {resultado['tipo_fenomeno']:<15} {resultado['estructura']:<20} {patrones:<20}\n")
                 
-                f.write("\n" + "=" * 100 + "\n")
+                # Seccion de analisis detallado
+                f.write("\n" + "=" * 130 + "\n")
+                f.write("ANALISIS DETALLADO CON EXPRESIONES REGULARES\n")
+                f.write("=" * 130 + "\n\n")
+                
+                for i, resultado in enumerate(resultados, 1):
+                    f.write(f"[{i}] {resultado['original']}\n")
+                    f.write(f"    Separacion: {resultado['separacion']}\n")
+                    f.write(f"    Estructura V/C: {resultado['estructura']}\n")
+                    f.write(f"    Tipo: {resultado['tipo_fenomeno']}\n")
+                    f.write(f"    Reglas: {resultado['reglas']}\n")
+                    
+                    if resultado['digrafos']:
+                        f.write(f"    Digrafos: {[d[1] for d in resultado['digrafos']]}\n")
+                    if resultado['diptongos']:
+                        f.write(f"    Diptongos: {[d[1] for d in resultado['diptongos']]}\n")
+                    if resultado['hiatos']:
+                        f.write(f"    Hiatos: {[d[1] for d in resultado['hiatos']]}\n")
+                    f.write("\n")
+                
+                f.write("=" * 130 + "\n")
             
-            print(f"✓ Resultados guardados en '{archivo_salida}'")
+            print(f"OK - Resultados guardados en '{archivo_salida}'")
         except Exception as e:
             print(f"Error al generar el archivo de salida: {e}")
     
     def mostrar_resultados_consola(self, resultados):
         """
-        Muestra los resultados en la consola.
+        Muestra los resultados en la consola con información extendida.
         
         Args:
             resultados (list): Lista de resultados a mostrar
         """
-        print("\n" + "=" * 100)
-        print("RESULTADOS DE LA SEPARACIÓN SILÁBICA")
-        print("=" * 100)
-        print(f"{'Palabra Original':<20} {'Separación Silábica':<25} {'Reglas Aplicadas':<50}")
-        print("-" * 100)
+        print("\n" + "=" * 150)
+        print("RESULTADOS DE LA SEPARACION SILABICA (con analisis de expresiones regulares)")
+        print("=" * 150)
+        print(f"{'Palabra':<15} {'Separacion':<20} {'Tipo':<15} {'Estructura':<20} {'Patrones':<20}")
+        print("-" * 150)
         
         for resultado in resultados:
-            print(f"{resultado['original']:<20} {resultado['separacion']:<25} {resultado['reglas']:<50}")
+            digrafos_str = ', '.join([d[1] for d in resultado['digrafos']]) if resultado['digrafos'] else ''
+            diptongos_str = ', '.join([d[1] for d in resultado['diptongos']]) if resultado['diptongos'] else ''
+            hiatos_str = ', '.join([d[1] for d in resultado['hiatos']]) if resultado['hiatos'] else ''
+            
+            # Combinar digrafos, diptongos e hiatos en una sola columna
+            patrones = digrafos_str if digrafos_str else (diptongos_str if diptongos_str else hiatos_str)
+            patrones = patrones if patrones else "---"
+            
+            print(f"{resultado['original']:<15} {resultado['separacion']:<20} {resultado['tipo_fenomeno']:<15} {resultado['estructura']:<20} {patrones:<20}")
         
-        print("=" * 100)
+        print("=" * 150)

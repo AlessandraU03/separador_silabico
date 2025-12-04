@@ -1,123 +1,884 @@
-====================================================================================================
-SEPARACIÓN SILÁBICA - AUTÓMATA FINITO DETERMINISTA
-Universidad Politécnica de Chiapas - Lenguajes y Autómatas
-====================================================================================================
+==================================================================================================================================
+SEPARACION SILABICA - AUTOMATA FINITO DETERMINISTA CON EXPRESIONES REGULARES
+Universidad Politecnica de Chiapas - Lenguajes y Automatas
+==================================================================================================================================
 
-Palabra Original     Separación Silábica       Reglas Aplicadas                                  
-----------------------------------------------------------------------------------------------------
-autonomia            auto-no-mia               Diptongo, V-C-V                                   
-murcielago           mur-ciela-go              V-C-C, Diptongo, V-C-V                            
-teatro               te-a-tro                  Hiato (VF+VF), V-GC (grupo consonántico)          
-ahorro               a-ho-rro                  V-C-V, V-D (dígrafo), Dígrafo                     
-computadora          com-pu-ta-do-ra           V-C-C, V-C-V                                      
-ciencia              ciencia                   Diptongo                                          
-cancion              can-cion                  V-C-C, Diptongo                                   
-casa                 ca-sa                     V-C-V                                             
-mesa                 me-sa                     V-C-V                                             
-pato                 pa-to                     V-C-V                                             
-gato                 ga-to                     V-C-V                                             
-loro                 lo-ro                     V-C-V                                             
-pera                 pe-ra                     V-C-V                                             
-aire                 aire                      Diptongo                                          
-reina                reina                     Diptongo                                          
-auto                 auto                      Diptongo                                          
-causa                causa                     Diptongo                                          
-cuota                cuota                     Diptongo                                          
-fuerte               fuerte                    Diptongo                                          
-ciudad               ciudad                    Diptongo                                          
-cuadro               cuadro                    Diptongo                                          
-peine                peine                     Diptongo                                          
-boina                boina                     Diptongo                                          
-poeta                po-e-ta                   Hiato (VF+VF), V-C-V                              
-caer                 ca-er                     Hiato (VF+VF)                                     
-leer                 le-er                     Hiato (VF+VF)                                     
-heroe                he-ro-e                   V-C-V, Hiato (VF+VF)                              
-buho                 bu-ho                     V-C-V                                             
-maiz                 maiz                      Diptongo                                          
-pais                 pais                      Diptongo                                          
-baul                 baul                      Diptongo                                          
-raiz                 raiz                      Diptongo                                          
-oir                  oir                       Diptongo                                          
-carro                ca-rro                    V-D (dígrafo), Dígrafo                            
-perro                pe-rro                    V-D (dígrafo), Dígrafo                            
-pollo                po-llo                    V-D (dígrafo), Dígrafo                            
-lluvia               llu-via                   Dígrafo, V-C-V, Diptongo                          
-muchacho             mu-cha-cho                V-D (dígrafo), Dígrafo                            
-calle                ca-lle                    V-D (dígrafo), Dígrafo                            
-arroz                a-rroz                    V-D (dígrafo), Dígrafo                            
-tarro                ta-rro                    V-D (dígrafo), Dígrafo                            
-silla                si-lla                    V-D (dígrafo), Dígrafo                            
-chico                chi-co                    Dígrafo, V-C-V                                    
-libro                li-bro                    V-GC (grupo consonántico)                         
-tigre                ti-gre                    V-GC (grupo consonántico)                         
-cable                ca-ble                    V-GC (grupo consonántico)                         
-drama                dra-ma                    V-C-V                                             
-grupo                gru-po                    V-C-V                                             
-plato                pla-to                    V-C-V                                             
-Cristo               cris-to                   V-C-C                                             
-problema             pro-ble-ma                V-GC (grupo consonántico), V-C-V                  
-iembre               iemb-re                   Diptongo, V-CCC                                   
-iembre               iemb-re                   Diptongo, V-CCC                                   
-sobre                so-bre                    V-GC (grupo consonántico)                         
-madre                ma-dre                    V-GC (grupo consonántico)                         
-padre                pa-dre                    V-GC (grupo consonántico)                         
-matematicas          ma-te-ma-ti-cas           V-C-V                                             
-lampara              lam-pa-ra                 V-C-C, V-C-V                                      
-dificil              di-fi-cil                 V-C-V                                             
-telefono             te-le-fo-no               V-C-V                                             
-cancion              can-cion                  V-C-C, Diptongo                                   
-acion                a-cion                    V-C-V, Diptongo                                   
-lapiz                la-piz                    V-C-V                                             
-arbol                ar-bol                    V-C-C                                             
-tunel                tu-nel                    V-C-V                                             
-extraordinario       ex-tra-or-di-na-rio       V-C-C, Hiato (VF+VF), V-C-V, Diptongo             
-construccion         con-st-ruc-cion           V-C-C, V-CCC, Diptongo                            
-instrumento          in-st-ru-men-to           V-C-C, V-CCC, V-C-V                               
-transcripcion        tran-sc-rip-cion          V-C-C, V-CCC, Diptongo                            
-interpretacion       in-ter-pre-ta-cion        V-C-C, V-C-V, Diptongo                            
-universidad          u-ni-ver-si-dad           V-C-V, V-C-C                                      
-programacion         pro-gra-ma-cion           V-GC (grupo consonántico), V-C-V, Diptongo        
-electronico          e-lec-tro-ni-co           V-C-V, V-C-C                                      
-fundamental          fun-da-men-tal            V-C-C, V-C-V                                      
-responsabilidad      res-pon-sa-bi-li-dad      V-C-C, V-C-V                                      
-institucion          in-sti-tu-cion            V-C-C, V-C-V, Diptongo                            
-constitucion         con-sti-tu-cion           V-C-C, V-C-V, Diptongo                            
-destruccion          des-truc-cion             V-C-C, Diptongo                                   
-obstruccion          ob-st-ruc-cion            V-C-C, V-CCC, Diptongo                            
-abstracto            ab-st-rac-to              V-C-C, V-CCC                                      
-transporte           tran-spor-te              V-C-C                                             
-transparente         tran-spa-ren-te           V-C-C, V-C-V                                      
-constante            con-stan-te               V-C-C                                             
-inscripcion          in-sc-rip-cion            V-C-C, V-CCC, Diptongo                            
-aeropuerto           a-e-ro-puerto             Hiato (VF+VF), V-C-V, Diptongo                    
-geometria            ge-o-me-tria              Hiato (VF+VF), V-C-V, V-GC (grupo consonántico), Diptongo
-oceano               o-ce-a-no                 V-C-V, Hiato (VF+VF)                              
-farmaceutico         far-ma-ceuti-co           V-C-C, V-C-V, Diptongo                            
-arqueologia          ar-queo-lo-gia            V-C-C, Diptongo, V-C-V                            
-biologia             biolo-gia                 Diptongo, V-C-V                                   
-tecnologia           tec-no-lo-gia             V-C-C, V-C-V, Diptongo                            
-sociologia           so-ciolo-gia              V-C-V, Diptongo                                   
-Mexico               me-xi-co                  V-C-V                                             
-America              a-me-ri-ca                V-C-V                                             
-Guatemala            guate-ma-la               Diptongo, V-C-V                                   
-Honduras             hon-du-ras                V-C-C, V-C-V                                      
-Nicaragua            ni-ca-ra-gua              V-C-V, Diptongo                                   
-Panama               pa-na-ma                  V-C-V                                             
-estudiaba            es-tu-diaba               V-C-C, V-C-V, Diptongo                            
-trabajando           tra-ba-jan-do             V-C-V, V-C-C                                      
-comieron             co-mieron                 V-C-V, Diptongo                                   
-bebieron             be-bieron                 V-C-V, Diptongo                                   
-escribiendo          es-cri-biendo             V-C-C, V-C-V, Diptongo                            
-leyendo              le-yen-do                 V-C-V, V-C-C                                      
-corriendo            co-rriendo                V-D (dígrafo), Dígrafo, Diptongo                  
-saltando             sal-tan-do                V-C-C                                             
-automata             auto-ma-ta                Diptongo, V-C-V                                   
-algoritmo            al-go-rit-mo              V-C-C, V-C-V                                      
-compilador           com-pi-la-dor             V-C-C, V-C-V                                      
-sintaxis             sin-ta-xis                V-C-C, V-C-V                                      
-semantica            se-man-ti-ca              V-C-V, V-C-C                                      
-lexema               le-xe-ma                  V-C-V                                             
-gramatica            gra-ma-ti-ca              V-C-V                                             
-recursivo            re-cur-si-vo              V-C-V, V-C-C                                      
+Palabra Original Separacion           Tipo            Estructura           Digrafos/Diptongos  
+----------------------------------------------------------------------------------------------------------------------------------
+autonomía       au-to-no-mí-a        DIPTONGO        VVCVCVCVV            au                  
+murciélago      mur-cié-la-go        DIPTONGO        CVCCVVCVCV           ié                  
+teatro          te-a-tro             HIATO           CVVCCV               ea                  
+ahorro          a-ho-rro             DIGRAFO         VCVCCV               rr                  
+computadora     com-pu-ta-do-ra      ---             CVCCVCVCVCV          ---                 
+ciencia         cien-cia             DIPTONGO        CVVCCVV              ie, ia              
+canción         can-ción             DIPTONGO        CVCCVVC              ió                  
+casa            ca-sa                ---             CVCV                 ---                 
+mesa            me-sa                ---             CVCV                 ---                 
+pato            pa-to                ---             CVCV                 ---                 
+gato            ga-to                ---             CVCV                 ---                 
+loro            lo-ro                ---             CVCV                 ---                 
+pera            pe-ra                ---             CVCV                 ---                 
+aire            ai-re                DIPTONGO        VVCV                 ai                  
+reina           rei-na               DIPTONGO        CVVCV                ei                  
+auto            au-to                DIPTONGO        VVCV                 au                  
+causa           cau-sa               DIPTONGO        CVVCV                au                  
+cuota           cuo-ta               DIPTONGO        CVVCV                uo                  
+fuerte          fuer-te              DIPTONGO        CVVCCV               ue                  
+ciudad          ciu-dad              DIPTONGO        CVVCVC               iu                  
+cuadro          cua-dro              DIPTONGO        CVVCCV               ua                  
+peine           pei-ne               DIPTONGO        CVVCV                ei                  
+boina           boi-na               DIPTONGO        CVVCV                oi                  
+poeta           po-e-ta              HIATO           CVVCV                oe                  
+caer            ca-er                HIATO           CVVC                 ae                  
+leer            le-er                HIATO           CVVC                 ee                  
+héroe           hé-ro-e              HIATO           CVCVV                oe                  
+búho            bú-ho                ---             CVCV                 ---                 
+maíz            ma-íz                HIATO           CVVC                 aí                  
+país            pa-ís                HIATO           CVVC                 aí                  
+baúl            ba-úl                HIATO           CVVC                 aú                  
+raíz            ra-íz                HIATO           CVVC                 aí                  
+oír             o-ír                 HIATO           VVC                  oí                  
+carro           ca-rro               DIGRAFO         CVCCV                rr                  
+perro           pe-rro               DIGRAFO         CVCCV                rr                  
+pollo           po-llo               DIGRAFO         CVCCV                ll                  
+lluvia          llu-via              DIGRAFO         CCVCVV               ll                  
+muchacho        mu-cha-cho           DIGRAFO         CVCCVCCV             ch, ch              
+calle           ca-lle               DIGRAFO         CVCCV                ll                  
+arroz           a-rroz               DIGRAFO         VCCVC                rr                  
+tarro           ta-rro               DIGRAFO         CVCCV                rr                  
+silla           si-lla               DIGRAFO         CVCCV                ll                  
+chico           chi-co               DIGRAFO         CCVCV                ch                  
+libro           li-bro               ---             CVCCV                ---                 
+tigre           ti-gre               ---             CVCCV                ---                 
+cable           ca-ble               ---             CVCCV                ---                 
+drama           dra-ma               ---             CCVCV                ---                 
+grupo           gru-po               ---             CCVCV                ---                 
+plato           pla-to               ---             CCVCV                ---                 
+Cristo          cris-to              ---             CCVCCV               ---                 
+problema        pro-ble-ma           ---             CCVCCVCV             ---                 
+diciembre       di-ciem-bre          DIPTONGO        CVCVVCCCV            ie                  
+noviembre       no-viem-bre          DIPTONGO        CVCVVCCCV            ie                  
+sobre           so-bre               ---             CVCCV                ---                 
+madre           ma-dre               ---             CVCCV                ---                 
+padre           pa-dre               ---             CVCCV                ---                 
+matemáticas     ma-te-má-ti-cas      ---             CVCVCVCVCVC          ---                 
+lámpara         lám-pa-ra            ---             CVCCVCV              ---                 
+difícil         di-fí-cil            ---             CVCVCVC              ---                 
+teléfono        te-lé-fo-no          ---             CVCVCVCV             ---                 
+canción         can-ción             DIPTONGO        CVCCVVC              ió                  
+acción          ac-ción              DIPTONGO        VCCVVC               ió                  
+lápiz           lá-piz               ---             CVCVC                ---                 
+árbol           ár-bol               ---             VCCVC                ---                 
+túnel           tú-nel               ---             CVCVC                ---                 
+extraordinario  ex-tra-or-di-na-rio  DIPTONGO        VCCCVVCCVCVCVV       io                  
+construcción    construc-ción        DIPTONGO        CVCCCCVCCVVC         ió                  
+instrumento     instru-men-to        ---             VCCCCVCVCCV          ---                 
+transcripción   transcrip-ción       DIPTONGO        CCVCCCCVCCVVC        ió                  
+interpretación  in-ter-pre-ta-ción   DIPTONGO        VCCVCCCVCVCVVC       ió                  
+universidad     u-ni-ver-si-dad      ---             VCVCVCCVCVC          ---                 
+programación    pro-gra-ma-ción      DIPTONGO        CCVCCVCVCVVC         ió                  
+electrónico     e-lec-tró-ni-co      ---             VCVCCCVCVCV          ---                 
+fundamental     fun-da-men-tal       ---             CVCCVCVCCVC          ---                 
+responsabilidad res-pon-sa-bi-li-dad ---             CVCCVCCVCVCVCVC      ---                 
+institución     in-sti-tu-ción       DIPTONGO        VCCCVCVCVVC          ió                  
+constitución    con-sti-tu-ción      DIPTONGO        CVCCCVCVCVVC         ió                  
+destrucción     des-truc-ción        DIPTONGO        CVCCCVCCVVC          ió                  
+obstrucción     obstruc-ción         DIPTONGO        VCCCCVCCVVC          ió                  
+abstracto       abstrac-to           ---             VCCCCVCCV            ---                 
+transporte      tran-spor-te         ---             CCVCCCVCCV           ---                 
+transparente    tran-spa-ren-te      ---             CCVCCCVCVCCV         ---                 
+constante       con-stan-te          ---             CVCCCVCCV            ---                 
+inscripción     inscrip-ción         DIPTONGO        VCCCCVCCVVC          ió                  
+aeropuerto      a-e-ro-puer-to       DIPTONGO        VVCVCVVCCV           ue                  
+geometría       ge-o-me-trí-a        HIATO           CVVCVCCVV            eo, ía              
+océano          o-cé-a-no            HIATO           VCVVCV               éa                  
+farmacéutico    far-ma-céu-ti-co     DIPTONGO        CVCCVCVVCVCV         éu                  
+arqueología     ar-que-o-lo-gí-a     DIPTONGO        VCCVVVCVCVV          ue                  
+biología        bio-lo-gí-a          DIPTONGO        CVVCVCVV             io                  
+tecnología      tec-no-lo-gí-a       HIATO           CVCCVCVCVV           ía                  
+sociología      so-cio-lo-gí-a       DIPTONGO        CVCVVCVCVV           io                  
+México          mé-xi-co             ---             CVCVCV               ---                 
+América         a-mé-ri-ca           ---             VCVCVCV              ---                 
+Guatemala       gua-te-ma-la         DIPTONGO        CVVCVCVCV            ua                  
+Honduras        hon-du-ras           ---             CVCCVCVC             ---                 
+Nicaragua       ni-ca-ra-gua         DIPTONGO        CVCVCVCVV            ua                  
+Panamá          pa-na-má             ---             CVCVCV               ---                 
+estudiaba       es-tu-dia-ba         DIPTONGO        VCCVCVVCV            ia                  
+trabajando      tra-ba-jan-do        ---             CCVCVCVCCV           ---                 
+comieron        co-mie-ron           DIPTONGO        CVCVVCVC             ie                  
+bebieron        be-bie-ron           DIPTONGO        CVCVVCVC             ie                  
+escribiendo     es-cri-bien-do       DIPTONGO        VCCCVCVVCCV          ie                  
+leyendo         le-yen-do            ---             CVCVCCV              ---                 
+corriendo       co-rrien-do          DIGRAFO         CVCCVVCCV            rr                  
+saltando        sal-tan-do           ---             CVCCVCCV             ---                 
+autómata        au-tó-ma-ta          DIPTONGO        VVCVCVCV             au                  
+algoritmo       al-go-rit-mo         ---             VCCVCVCCV            ---                 
+compilador      com-pi-la-dor        ---             CVCCVCVCVC           ---                 
+sintaxis        sin-ta-xis           ---             CVCCVCVC             ---                 
+semántica       se-mán-ti-ca         ---             CVCVCCVCV            ---                 
+lexema          le-xe-ma             ---             CVCVCV               ---                 
+gramática       gra-má-ti-ca         ---             CCVCVCVCV            ---                 
+recursivo       re-cur-si-vo         ---             CVCVCCVCV            ---                 
 
-====================================================================================================
+==================================================================================================================================
+ANALISIS DETALLADO CON EXPRESIONES REGULARES
+==================================================================================================================================
+
+[1] autonomía
+    Separacion: au-to-no-mí-a
+    Estructura V/C: VVCVCVCVV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V
+    Diptongos: ['au']
+    Hiatos: ['ía']
+
+[2] murciélago
+    Separacion: mur-cié-la-go
+    Estructura V/C: CVCCVVCVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VC-CV
+    Diptongos: ['ié']
+
+[3] teatro
+    Separacion: te-a-tro
+    Estructura V/C: CVVCCV
+    Tipo: HIATO
+    Reglas: Hiato, V-GC-V
+    Hiatos: ['ea']
+
+[4] ahorro
+    Separacion: a-ho-rro
+    Estructura V/C: VCVCCV
+    Tipo: DIGRAFO
+    Reglas: V-C-V, V-Digrafo-V
+    Digrafos: ['rr']
+
+[5] computadora
+    Separacion: com-pu-ta-do-ra
+    Estructura V/C: CVCCVCVCVCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[6] ciencia
+    Separacion: cien-cia
+    Estructura V/C: CVVCCVV
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ie', 'ia']
+
+[7] canción
+    Separacion: can-ción
+    Estructura V/C: CVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[8] casa
+    Separacion: ca-sa
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[9] mesa
+    Separacion: me-sa
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[10] pato
+    Separacion: pa-to
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[11] gato
+    Separacion: ga-to
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[12] loro
+    Separacion: lo-ro
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[13] pera
+    Separacion: pe-ra
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[14] aire
+    Separacion: ai-re
+    Estructura V/C: VVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ai']
+
+[15] reina
+    Separacion: rei-na
+    Estructura V/C: CVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ei']
+
+[16] auto
+    Separacion: au-to
+    Estructura V/C: VVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['au']
+
+[17] causa
+    Separacion: cau-sa
+    Estructura V/C: CVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['au']
+
+[18] cuota
+    Separacion: cuo-ta
+    Estructura V/C: CVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['uo']
+
+[19] fuerte
+    Separacion: fuer-te
+    Estructura V/C: CVVCCV
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ue']
+
+[20] ciudad
+    Separacion: ciu-dad
+    Estructura V/C: CVVCVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['iu']
+
+[21] cuadro
+    Separacion: cua-dro
+    Estructura V/C: CVVCCV
+    Tipo: DIPTONGO
+    Reglas: V-GC-V
+    Diptongos: ['ua']
+
+[22] peine
+    Separacion: pei-ne
+    Estructura V/C: CVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ei']
+
+[23] boina
+    Separacion: boi-na
+    Estructura V/C: CVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['oi']
+
+[24] poeta
+    Separacion: po-e-ta
+    Estructura V/C: CVVCV
+    Tipo: HIATO
+    Reglas: Hiato, V-C-V
+    Hiatos: ['oe']
+
+[25] caer
+    Separacion: ca-er
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['ae']
+
+[26] leer
+    Separacion: le-er
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['ee']
+
+[27] héroe
+    Separacion: hé-ro-e
+    Estructura V/C: CVCVV
+    Tipo: HIATO
+    Reglas: Hiato, V-C-V
+    Hiatos: ['oe']
+
+[28] búho
+    Separacion: bú-ho
+    Estructura V/C: CVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[29] maíz
+    Separacion: ma-íz
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['aí']
+
+[30] país
+    Separacion: pa-ís
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['aí']
+
+[31] baúl
+    Separacion: ba-úl
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['aú']
+
+[32] raíz
+    Separacion: ra-íz
+    Estructura V/C: CVVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['aí']
+
+[33] oír
+    Separacion: o-ír
+    Estructura V/C: VVC
+    Tipo: HIATO
+    Reglas: Hiato
+    Hiatos: ['oí']
+
+[34] carro
+    Separacion: ca-rro
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['rr']
+
+[35] perro
+    Separacion: pe-rro
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['rr']
+
+[36] pollo
+    Separacion: po-llo
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['ll']
+
+[37] lluvia
+    Separacion: llu-via
+    Estructura V/C: CCVCVV
+    Tipo: DIGRAFO
+    Reglas: V-C-V
+    Digrafos: ['ll']
+    Diptongos: ['ia']
+
+[38] muchacho
+    Separacion: mu-cha-cho
+    Estructura V/C: CVCCVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['ch', 'ch']
+
+[39] calle
+    Separacion: ca-lle
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['ll']
+
+[40] arroz
+    Separacion: a-rroz
+    Estructura V/C: VCCVC
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['rr']
+
+[41] tarro
+    Separacion: ta-rro
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['rr']
+
+[42] silla
+    Separacion: si-lla
+    Estructura V/C: CVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V
+    Digrafos: ['ll']
+
+[43] chico
+    Separacion: chi-co
+    Estructura V/C: CCVCV
+    Tipo: DIGRAFO
+    Reglas: V-C-V
+    Digrafos: ['ch']
+
+[44] libro
+    Separacion: li-bro
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[45] tigre
+    Separacion: ti-gre
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[46] cable
+    Separacion: ca-ble
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[47] drama
+    Separacion: dra-ma
+    Estructura V/C: CCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[48] grupo
+    Separacion: gru-po
+    Estructura V/C: CCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[49] plato
+    Separacion: pla-to
+    Estructura V/C: CCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[50] Cristo
+    Separacion: cris-to
+    Estructura V/C: CCVCCV
+    Tipo: ---
+    Reglas: VC-CV
+
+[51] problema
+    Separacion: pro-ble-ma
+    Estructura V/C: CCVCCVCV
+    Tipo: ---
+    Reglas: V-C-V, V-GC-V
+
+[52] diciembre
+    Separacion: di-ciem-bre
+    Estructura V/C: CVCVVCCCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VCC-GC
+    Diptongos: ['ie']
+
+[53] noviembre
+    Separacion: no-viem-bre
+    Estructura V/C: CVCVVCCCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VCC-GC
+    Diptongos: ['ie']
+
+[54] sobre
+    Separacion: so-bre
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[55] madre
+    Separacion: ma-dre
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[56] padre
+    Separacion: pa-dre
+    Estructura V/C: CVCCV
+    Tipo: ---
+    Reglas: V-GC-V
+
+[57] matemáticas
+    Separacion: ma-te-má-ti-cas
+    Estructura V/C: CVCVCVCVCVC
+    Tipo: ---
+    Reglas: V-C-V
+
+[58] lámpara
+    Separacion: lám-pa-ra
+    Estructura V/C: CVCCVCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[59] difícil
+    Separacion: di-fí-cil
+    Estructura V/C: CVCVCVC
+    Tipo: ---
+    Reglas: V-C-V
+
+[60] teléfono
+    Separacion: te-lé-fo-no
+    Estructura V/C: CVCVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[61] canción
+    Separacion: can-ción
+    Estructura V/C: CVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[62] acción
+    Separacion: ac-ción
+    Estructura V/C: VCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[63] lápiz
+    Separacion: lá-piz
+    Estructura V/C: CVCVC
+    Tipo: ---
+    Reglas: V-C-V
+
+[64] árbol
+    Separacion: ár-bol
+    Estructura V/C: VCCVC
+    Tipo: ---
+    Reglas: VC-CV
+
+[65] túnel
+    Separacion: tú-nel
+    Estructura V/C: CVCVC
+    Tipo: ---
+    Reglas: V-C-V
+
+[66] extraordinario
+    Separacion: ex-tra-or-di-na-rio
+    Estructura V/C: VCCCVVCCVCVCVV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V, VC-CV, VCC-GC
+    Diptongos: ['io']
+    Hiatos: ['ao']
+
+[67] construcción
+    Separacion: construc-ción
+    Estructura V/C: CVCCCCVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[68] instrumento
+    Separacion: instru-men-to
+    Estructura V/C: VCCCCVCVCCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[69] transcripción
+    Separacion: transcrip-ción
+    Estructura V/C: CCVCCCCVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[70] interpretación
+    Separacion: in-ter-pre-ta-ción
+    Estructura V/C: VCCVCCCVCVCVVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VC-CV, VCC-GC
+    Diptongos: ['ió']
+
+[71] universidad
+    Separacion: u-ni-ver-si-dad
+    Estructura V/C: VCVCVCCVCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[72] programación
+    Separacion: pro-gra-ma-ción
+    Estructura V/C: CCVCCVCVCVVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V, V-GC-V
+    Diptongos: ['ió']
+
+[73] electrónico
+    Separacion: e-lec-tró-ni-co
+    Estructura V/C: VCVCCCVCVCV
+    Tipo: ---
+    Reglas: V-C-V, VCC-GC
+
+[74] fundamental
+    Separacion: fun-da-men-tal
+    Estructura V/C: CVCCVCVCCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[75] responsabilidad
+    Separacion: res-pon-sa-bi-li-dad
+    Estructura V/C: CVCCVCCVCVCVCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[76] institución
+    Separacion: in-sti-tu-ción
+    Estructura V/C: VCCCVCVCVVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VCC-V
+    Diptongos: ['ió']
+
+[77] constitución
+    Separacion: con-sti-tu-ción
+    Estructura V/C: CVCCCVCVCVVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VCC-V
+    Diptongos: ['ió']
+
+[78] destrucción
+    Separacion: des-truc-ción
+    Estructura V/C: CVCCCVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV, VCC-GC
+    Diptongos: ['ió']
+
+[79] obstrucción
+    Separacion: obstruc-ción
+    Estructura V/C: VCCCCVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[80] abstracto
+    Separacion: abstrac-to
+    Estructura V/C: VCCCCVCCV
+    Tipo: ---
+    Reglas: VC-CV
+
+[81] transporte
+    Separacion: tran-spor-te
+    Estructura V/C: CCVCCCVCCV
+    Tipo: ---
+    Reglas: VC-CV, VCC-V
+
+[82] transparente
+    Separacion: tran-spa-ren-te
+    Estructura V/C: CCVCCCVCVCCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV, VCC-V
+
+[83] constante
+    Separacion: con-stan-te
+    Estructura V/C: CVCCCVCCV
+    Tipo: ---
+    Reglas: VC-CV, VCC-V
+
+[84] inscripción
+    Separacion: inscrip-ción
+    Estructura V/C: VCCCCVCCVVC
+    Tipo: DIPTONGO
+    Reglas: VC-CV
+    Diptongos: ['ió']
+
+[85] aeropuerto
+    Separacion: a-e-ro-puer-to
+    Estructura V/C: VVCVCVVCCV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V, VC-CV
+    Diptongos: ['ue']
+    Hiatos: ['ae']
+
+[86] geometría
+    Separacion: ge-o-me-trí-a
+    Estructura V/C: CVVCVCCVV
+    Tipo: HIATO
+    Reglas: Hiato, V-C-V, V-GC-V
+    Hiatos: ['eo', 'ía']
+
+[87] océano
+    Separacion: o-cé-a-no
+    Estructura V/C: VCVVCV
+    Tipo: HIATO
+    Reglas: Hiato, V-C-V
+    Hiatos: ['éa']
+
+[88] farmacéutico
+    Separacion: far-ma-céu-ti-co
+    Estructura V/C: CVCCVCVVCVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VC-CV
+    Diptongos: ['éu']
+
+[89] arqueología
+    Separacion: ar-que-o-lo-gí-a
+    Estructura V/C: VCCVVVCVCVV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V, VC-CV
+    Diptongos: ['ue']
+    Hiatos: ['eo', 'ía']
+
+[90] biología
+    Separacion: bio-lo-gí-a
+    Estructura V/C: CVVCVCVV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V
+    Diptongos: ['io']
+    Hiatos: ['ía']
+
+[91] tecnología
+    Separacion: tec-no-lo-gí-a
+    Estructura V/C: CVCCVCVCVV
+    Tipo: HIATO
+    Reglas: Hiato, V-C-V, VC-CV
+    Hiatos: ['ía']
+
+[92] sociología
+    Separacion: so-cio-lo-gí-a
+    Estructura V/C: CVCVVCVCVV
+    Tipo: DIPTONGO
+    Reglas: Hiato, V-C-V
+    Diptongos: ['io']
+    Hiatos: ['ía']
+
+[93] México
+    Separacion: mé-xi-co
+    Estructura V/C: CVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[94] América
+    Separacion: a-mé-ri-ca
+    Estructura V/C: VCVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[95] Guatemala
+    Separacion: gua-te-ma-la
+    Estructura V/C: CVVCVCVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ua']
+
+[96] Honduras
+    Separacion: hon-du-ras
+    Estructura V/C: CVCCVCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[97] Nicaragua
+    Separacion: ni-ca-ra-gua
+    Estructura V/C: CVCVCVCVV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ua']
+
+[98] Panamá
+    Separacion: pa-na-má
+    Estructura V/C: CVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[99] estudiaba
+    Separacion: es-tu-dia-ba
+    Estructura V/C: VCCVCVVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VC-CV
+    Diptongos: ['ia']
+
+[100] trabajando
+    Separacion: tra-ba-jan-do
+    Estructura V/C: CCVCVCVCCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[101] comieron
+    Separacion: co-mie-ron
+    Estructura V/C: CVCVVCVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ie']
+
+[102] bebieron
+    Separacion: be-bie-ron
+    Estructura V/C: CVCVVCVC
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['ie']
+
+[103] escribiendo
+    Separacion: es-cri-bien-do
+    Estructura V/C: VCCCVCVVCCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V, VC-CV, VCC-GC
+    Diptongos: ['ie']
+
+[104] leyendo
+    Separacion: le-yen-do
+    Estructura V/C: CVCVCCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[105] corriendo
+    Separacion: co-rrien-do
+    Estructura V/C: CVCCVVCCV
+    Tipo: DIGRAFO
+    Reglas: V-Digrafo-V, VC-CV
+    Digrafos: ['rr']
+    Diptongos: ['ie']
+
+[106] saltando
+    Separacion: sal-tan-do
+    Estructura V/C: CVCCVCCV
+    Tipo: ---
+    Reglas: VC-CV
+
+[107] autómata
+    Separacion: au-tó-ma-ta
+    Estructura V/C: VVCVCVCV
+    Tipo: DIPTONGO
+    Reglas: V-C-V
+    Diptongos: ['au']
+
+[108] algoritmo
+    Separacion: al-go-rit-mo
+    Estructura V/C: VCCVCVCCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[109] compilador
+    Separacion: com-pi-la-dor
+    Estructura V/C: CVCCVCVCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[110] sintaxis
+    Separacion: sin-ta-xis
+    Estructura V/C: CVCCVCVC
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[111] semántica
+    Separacion: se-mán-ti-ca
+    Estructura V/C: CVCVCCVCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+[112] lexema
+    Separacion: le-xe-ma
+    Estructura V/C: CVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[113] gramática
+    Separacion: gra-má-ti-ca
+    Estructura V/C: CCVCVCVCV
+    Tipo: ---
+    Reglas: V-C-V
+
+[114] recursivo
+    Separacion: re-cur-si-vo
+    Estructura V/C: CVCVCCVCV
+    Tipo: ---
+    Reglas: V-C-V, VC-CV
+
+==================================================================================================================================

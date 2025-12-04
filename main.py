@@ -1,22 +1,3 @@
-"""
-Universidad Politécnica de Chiapas
-Lenguajes y Autómatas - Cuatrimestre 7
-Práctica 3: Separador Silábico Básico (DFA e Implementación)
-
-Autores: [Tu nombre y matrícula]
-Fecha: Diciembre 2024
-
-Descripción:
-Este programa implementa un Autómata Finito Determinista (DFA) para la separación
-silábica en español siguiendo las reglas de la Real Academia Española.
-
-Módulos:
-- reglas_silabicas.py: Define las reglas y clasificaciones
-- separador_dfa.py: Implementa el DFA
-- procesador_archivos.py: Gestiona entrada/salida
-- utilidades.py: Funciones auxiliares
-- main.py: Punto de entrada del programa
-"""
 
 from procesador_archivos import ProcesadorArchivos
 from utilidades import Utilidades
